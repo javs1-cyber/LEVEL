@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self' https://*.googleapis.com https://*.gstatic.com https://*.firebaseapp.com; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.gstatic.com https://*.googleapis.com; connect-src 'self' https://*.googleapis.com https://*.firebaseapp.com wss://*.firebaseio.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline';"
+        }
+      ]
+    }
+  ]
+}
