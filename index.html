@@ -1001,9 +1001,12 @@ function dayReset(){
   if(S.lastDate){
     const doneCount=S.habits.filter(h=>h.done).length;
     S.habitHistory[S.lastDate]=doneCount;
+    if(!S.habitLog)S.habitLog={};
+    S.habitLog[S.lastDate]=S.habits.filter(h=>h.done).map(h=>h.name);
     // Trim to last 90 days
     const cutoff=new Date();cutoff.setDate(cutoff.getDate()-90);
     Object.keys(S.habitHistory).forEach(k=>{if(new Date(k)<cutoff)delete S.habitHistory[k];});
+    Object.keys(S.habitLog).forEach(k=>{if(new Date(k)<cutoff)delete S.habitLog[k];});
   }
   S.habits.forEach(h=>{h.streak=h.done?(h.streak||0)+1:0;h.done=false;});
   S.todayXP=0;S.todayCoreXP=0;
@@ -1243,9 +1246,12 @@ window.togH=function(id){
   const todayKey=new Date().toDateString();
   if(!S.habitHistory)S.habitHistory={};
   S.habitHistory[todayKey]=S.habits.filter(h=>h.done).length;
+  if(!S.habitLog)S.habitLog={};
+  S.habitLog[todayKey]=S.habits.filter(h=>h.done).map(h=>h.name);
   // Trim history to last 90 days to keep Firestore lean
   const cutoff=new Date();cutoff.setDate(cutoff.getDate()-90);
   Object.keys(S.habitHistory).forEach(k=>{if(new Date(k)<cutoff)delete S.habitHistory[k];});
+  Object.keys(S.habitLog).forEach(k=>{if(new Date(k)<cutoff)delete S.habitLog[k];});
   scheduleSave();
   trackTimeAchievements();trackDailyAchievements();
   if(checkAchievements())scheduleSave();
